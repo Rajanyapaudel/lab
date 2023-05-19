@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Typing Test in Nepali</title>
+  <style>
+    @font-face {
+      font-family: 'Preeti';
+      src: url('preeti.TTF') format('truetype');
+    }
+
+    body {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    #input {
+      font-family: 'Preeti', sans-serif;
+    }
+    #prompt{
+        font-family: 'Preeti', sans-serif;
+        display: inline-block;
+        margin-right: 10px;
+        vertical-align: top;
+    }
+
+    #image {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Typing Test in Nepali</h1>
+  <p id="prompt" contenteditable="true"></p> <br><!-- Make the paragraph editable -->
+  <button onclick="pasteText()">Paste</button> <br><!-- Add the Paste button -->
+  <textarea id="input" rows="5" cols="50" autofocus></textarea>
+  <br>
+  <button onclick="startTest()">Start</button>
+  <br><br>
+  <p id="result"></p>
+  <img id="image" src="img.jpg" alt="Adjustable Image">
+
+  <script>
+    function pasteText() {
+      navigator.clipboard.readText()
+        .then(text => {
+          document.getElementById("prompt").innerHTML = text;
+          document.getElementById("prompt").style.fontFamily = 'Preeti, sans-serif';
+        })
+        .catch(error => {
+          console.error('Error pasting text: ', error);
+        });
+    }
+
+    function startTest() {
+      var prompt = document.getElementById("prompt").textContent;
+      var input = document.getElementById("input").value;
+      var promptWords = prompt.trim().split(" ");
+      var inputWords = input.trim().split(" ");
+
+      var accuracy = calculateAccuracy(promptWords, inputWords);
+      var time = calculateTime();
+      var wpm = calculateWPM(inputWords, time);
+
+      var result = "Accuracy: " + accuracy + "%<br>";
+      result += "Time: " + time + " seconds<br>";
+      result += "Words per Minute: " + wpm;
+
+      document.getElementById("result").innerHTML = result;
+    }
+
+    function calculateAccuracy(promptWords, inputWords) {
+      var promptText = promptWords.join(" ").trim();
+      var inputText = inputWords.join(" ").trim();
+      return (promptText === inputText) ? 100 : 0;
+    }
+
+    function calculateTime() {
+      var endTime = new Date().getTime();
+      var startTime = Number(localStorage.getItem("startTime"));
+      var totalTime = (endTime - startTime) / 1000; // Convert to seconds
+      return totalTime.toFixed(2);
+    }
+
+    function calculateWPM(inputWords, time) {
+      var wordCount = inputWords.length;
+      var wpm = (wordCount / (time / 60)).toFixed(0);
+      return wpm;
+    }
+
+    window.onload = function() {
+      if (!localStorage.getItem("startTime")) {
+        localStorage.setItem("startTime", new Date().getTime());
+      }
+    };
+  </script>
+</body>
+</html>

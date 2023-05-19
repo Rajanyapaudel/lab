@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Functions</title>
+</head>
+<body>
+    <h2>DOM Functions Demo</h2>
+
+    <div id="myDiv">
+        <p>This is a paragraph.</p>
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+        </ul>
+    </div>
+
+    <script>
+        // Accessing elements by ID
+        var myDiv = document.getElementById("myDiv");
+        console.log("Element by ID:", myDiv);
+
+        // Accessing elements by tag name
+        var paragraphs = document.getElementsByTagName("p");
+        console.log("Elements by Tag Name:", paragraphs);
+
+        // Accessing elements by class name
+        var listItems = document.getElementsByClassName("list-item");
+        console.log("Elements by Class Name:", listItems);
+
+        // Modifying element content
+        myDiv.innerHTML += "<p>Another paragraph</p>";
+
+        // Creating new elements
+        var newHeading = document.createElement("h3");
+        newHeading.textContent = "New Heading";
+        myDiv.appendChild(newHeading);
+
+        var newItem = document.createElement("li");
+        newItem.textContent = "New Item";
+        var ul = document.getElementsByTagName("ul")[0];
+        ul.appendChild(newItem);
+
+        // Modifying element attributes
+        myDiv.setAttribute("class", "container");
+        myDiv.setAttribute("style", "color: blue;");
+
+        // Removing elements
+        var listItem = document.getElementsByTagName("li")[0];
+        listItem.parentNode.removeChild(listItem);
+
+        // Adding event listeners
+        myDiv.addEventListener("click", function() {
+            alert("Div clicked!");
+        });
+
+        // Modifying element styles
+        myDiv.style.backgroundColor = "lightgray";
+        myDiv.style.padding = "10px";
+    </script>
+</body>
+</html>
